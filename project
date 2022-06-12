@@ -1,0 +1,21 @@
+
+int brightness = 0;
+
+void setup()
+{
+  TCCR1A |=(1<<COM1A1);//prescalar=1
+  //Making clock  to  1,16MHz clock, max value 2^16=65356
+  DDRB = 0B00000010;// B ports  are selected and in thatt 2nd is selected
+}
+
+void loop()
+{
+  for (brightness = 0; brightness <= 255; brightness += 5) {
+    OCR1A = brightness ;//OCR1A=(fclock/prescalar.ftarget)-1=31249 but OCR1A max=256
+    delay(30); // Wait for 30 millisecond(s)
+  }
+  for (brightness = 255; brightness >= 0; brightness -= 5) {
+   OCR1A = brightness ;
+    delay(30); // Wait for 30 millisecond(s)
+  }
+}
